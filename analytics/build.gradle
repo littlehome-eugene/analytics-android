@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.getkeepsafe.dexcount'
+//apply plugin: 'com.getkeepsafe.dexcount'
 
 
 apply from: rootProject.file('gradle/android.gradle')
