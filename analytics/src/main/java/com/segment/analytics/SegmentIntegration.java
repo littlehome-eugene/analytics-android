@@ -359,23 +359,37 @@ class SegmentIntegration extends Integration<Void> {
     logger.verbose("Uploading payloads in queue to Segment.");
     int payloadsUploaded = 0;
     Client.Connection connection = null;
+    Client.Connection littlehomeConnection = null;
+
     try {
       // Open a connection.
       connection = client.upload();
+      littlehomeConnection = client.uploadLittlehome();
 
       // Write the payloads into the OutputStream.
       BatchPayloadWriter writer =
           new BatchPayloadWriter(connection.os) //
               .beginObject() //
               .beginBatchArray();
+
+      BatchPayloadWriter writer2 =
+          new BatchPayloadWriter(littlehomeConnection.os) //
+              .beginObject() //
+              .beginBatchArray();
+
       PayloadWriter payloadWriter = new PayloadWriter(writer, crypto);
-      payloadQueue.forEach(payloadWriter);
+      PayloadWriter payloadWriter2 = new PayloadWriter(writer, crypto);
+
+      // payloadQueue.forEach(payloadWriter);
+      payloadQueue.forEach(payloadWriter, payloadWriter2);
       writer.endBatchArray().endObject().close();
+      writer2.endBatchArray().endObject().close();
       // Don't use the result of QueueFiles#forEach, since we may not upload the last element.
       payloadsUploaded = payloadWriter.payloadCount;
 
       // Upload the payloads.
       connection.close();
+      littlehomeConnection.close();
     } catch (Client.HTTPException e) {
       if (e.is4xx() && e.responseCode != 429) {
         // Simply log and proceed to remove the rejected payloads from the queue.

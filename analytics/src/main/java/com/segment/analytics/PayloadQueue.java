@@ -86,6 +86,11 @@ abstract class PayloadQueue implements Closeable {
     }
 
     @Override
+    void forEach2(ElementVisitor visitor1, ElementVisitor visitor2) throws IOException {
+      queueFile.forEach(visitor1, visitor2);
+    }
+
+    @Override
     public void close() throws IOException {
       queueFile.close();
     }

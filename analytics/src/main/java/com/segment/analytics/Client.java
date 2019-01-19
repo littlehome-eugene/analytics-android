@@ -92,6 +92,12 @@ class Client {
     return createPostConnection(connection);
   }
 
+  Connection uploadLittlehome() throws IOException {
+    HttpURLConnection connection = connectionFactory.uploadLittlehome();
+    return createPostConnection(connection);
+  }
+
+
   Connection attribution() throws IOException {
     HttpURLConnection connection = connectionFactory.attribution(writeKey);
     return createPostConnection(connection);

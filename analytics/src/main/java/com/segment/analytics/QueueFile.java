@@ -445,6 +445,21 @@ public class QueueFile implements Closeable {
     return elementCount;
   }
 
+  public synchronized int forEach(PayloadQueue.ElementVisitor reader1, PayloadQueue.ElementVisitor reader2) throws IOException {
+    int position = first.position;
+    for (int i = 0; i < elementCount; i++) {
+      Element current = readElement(position);
+      boolean shouldContinue = reader1.read(new ElementInputStream(current), current.length);
+      reader2.read(new ElementInputStream(current), current.length);
+      if (!shouldContinue) {
+        return i + 1;
+      }
+      position = wrapPosition(current.position + Element.HEADER_LENGTH + current.length);
+    }
+    return elementCount;
+  }
+
+
   @Private
   final class ElementInputStream extends InputStream {
     private int position;
