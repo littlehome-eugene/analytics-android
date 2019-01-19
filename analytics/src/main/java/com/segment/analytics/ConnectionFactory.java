@@ -63,7 +63,7 @@ public class ConnectionFactory {
 
   public HttpURLConnection uploadLittlehome() throws IOException {
     HttpURLConnection connection = openConnection("http://zibann.kr:10010");
-    connection.setRequestProperty("Authorization", authorizationHeader(writeKey));
+    // connection.setRequestProperty("Authorization", authorizationHeader());
     connection.setRequestProperty("Content-Encoding", "gzip");
     connection.setDoOutput(true);
     connection.setChunkedStreamingMode(0);

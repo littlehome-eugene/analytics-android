@@ -381,7 +381,7 @@ class SegmentIntegration extends Integration<Void> {
       PayloadWriter payloadWriter2 = new PayloadWriter(writer, crypto);
 
       // payloadQueue.forEach(payloadWriter);
-      payloadQueue.forEach(payloadWriter, payloadWriter2);
+      payloadQueue.forEach2(payloadWriter, payloadWriter2);
       writer.endBatchArray().endObject().close();
       writer2.endBatchArray().endObject().close();
       // Don't use the result of QueueFiles#forEach, since we may not upload the last element.

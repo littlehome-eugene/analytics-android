@@ -37,6 +37,7 @@ abstract class PayloadQueue implements Closeable {
   abstract void add(byte[] data) throws IOException;
 
   abstract void forEach(ElementVisitor visitor) throws IOException;
+  abstract void forEach2(ElementVisitor visitor1, ElementVisitor visitor2) throws IOException;
 
   interface ElementVisitor {
     /**
@@ -125,6 +126,19 @@ abstract class PayloadQueue implements Closeable {
       for (int i = 0; i < queue.size(); i++) {
         byte[] data = queue.get(i);
         boolean shouldContinue = visitor.read(new ByteArrayInputStream(data), data.length);
+        if (!shouldContinue) {
+          return;
+        }
+      }
+    }
+
+
+    @Override
+    void forEach2(ElementVisitor visitor1, ElementVisitor visitor2) throws IOException {
+      for (int i = 0; i < queue.size(); i++) {
+        byte[] data = queue.get(i);
+        boolean shouldContinue = visitor1.read(new ByteArrayInputStream(data), data.length);
+        visitor2.read(new ByteArrayInputStream(data), data.length);
         if (!shouldContinue) {
           return;
         }
