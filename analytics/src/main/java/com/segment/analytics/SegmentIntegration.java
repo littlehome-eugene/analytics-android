@@ -378,7 +378,7 @@ class SegmentIntegration extends Integration<Void> {
               .beginBatchArray();
 
       PayloadWriter payloadWriter = new PayloadWriter(writer, crypto);
-      PayloadWriter payloadWriter2 = new PayloadWriter(writer, crypto);
+      PayloadWriter payloadWriter2 = new PayloadWriter(writer2, crypto);
 
       // payloadQueue.forEach(payloadWriter);
       payloadQueue.forEach2(payloadWriter, payloadWriter2);
