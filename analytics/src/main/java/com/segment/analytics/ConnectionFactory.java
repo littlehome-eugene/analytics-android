@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.content.pm.ApplicationInfo;
+
 /**
  * Abstraction to customize how connections are created. This is can be used to point our SDK at
  * your proxy server for instance.
@@ -62,9 +64,13 @@ public class ConnectionFactory {
   }
 
   public HttpURLConnection uploadLittlehome() throws IOException {
-    HttpURLConnection connection = openConnection("http://zibann.kr:10010");
-    // connection.setRequestProperty("Authorization", authorizationHeader());
-    // connection.setRequestProperty("Content-Encoding", "gzip");
+
+    String url = "https://log.littlehome.kr:10010";
+    if(BuildConfig.DEBUG) {
+      url = "http://zibann.kr:10110";
+    }
+
+    HttpURLConnection connection = openConnection(url);
     connection.setDoOutput(true);
     connection.setChunkedStreamingMode(0);
     return connection;

@@ -430,16 +430,20 @@ public class Analytics {
 
   @Private
   void recordScreenViews(Activity activity) {
-    PackageManager packageManager = activity.getPackageManager();
-    try {
-      ActivityInfo info =
-          packageManager.getActivityInfo(activity.getComponentName(), PackageManager.GET_META_DATA);
-      CharSequence activityLabel = info.loadLabel(packageManager);
-      //noinspection deprecation
-      screen(null, activityLabel.toString());
-    } catch (PackageManager.NameNotFoundException e) {
-      throw new AssertionError("Activity Not Found: " + e.toString());
-    }
+    // PackageManager packageManager = activity.getPackageManager();
+    // try {
+    //   // ActivityInfo info =
+    //   //     packageManager.getActivityInfo(activity.getComponentName(), PackageManager.GET_META_DATA);
+    //   // CharSequence activityLabel = info.loadLabel(packageManager);
+    //   // //noinspection deprecation
+    //   // screen(null, activityLabel.toString());
+
+    // } catch (PackageManager.NameNotFoundException e) {
+    //   throw new AssertionError("Activity Not Found: " + e.toString());
+    // }
+
+    screen(null, activity.getClass().getSimpleName());
+
   }
 
   @Private
