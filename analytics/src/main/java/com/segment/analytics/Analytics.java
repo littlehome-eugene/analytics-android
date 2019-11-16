@@ -356,7 +356,8 @@ public class Analytics {
 
     Client.Connection connection = null;
     try {
-      connection = client.attribution();
+      // connection = client.attribution();
+      connection = client.attributionLittlehome();
 
       // Write the request body.
       Writer writer = new BufferedWriter(new OutputStreamWriter(connection.os));

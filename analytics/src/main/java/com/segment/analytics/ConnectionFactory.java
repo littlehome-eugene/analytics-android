@@ -91,6 +91,25 @@ public class ConnectionFactory {
   }
 
   /**
+   * Return a {@link HttpURLConnection} that writes gets attribution information from {@code
+   * https://mobile-service.segment.com/attribution}.
+   */
+  public HttpURLConnection attributionLittlehome() throws IOException {
+
+    String url = "https://log.littlehome.kr:10010";
+    if(BuildConfig.DEBUG) {
+      url = "http://zibann.kr:10110";
+    }
+
+    HttpURLConnection connection =
+        openConnection(url);
+    // connection.setRequestProperty("Authorization", authorizationHeader(writeKey));
+    // connection.setRequestMethod("POST");
+    connection.setDoOutput(true);
+    return connection;
+  }
+
+  /**
    * Configures defaults for connections opened with {@link #upload(String)}, {@link
    * #attribution(String)} and {@link #projectSettings(String)}.
    */
